@@ -165,7 +165,13 @@ pub fn module(router: &mut windmark::Router) {
 
   router.set_footer(Box::new(|_| {
     format!(
-      "## COMMENTS\n=> /api/post-comment Make a comment!\n{}",
+      "## COMMENTS ({}/{})\n=> /api/post-comment Make a comment!\n{}",
+      if let Ok(comments) = COMMENTS.lock() {
+        (*comments).len().to_string()
+      } else {
+        "?".to_string()
+      },
+      MAX_COMMENTS.load(Ordering::SeqCst),
       if let Ok(comments) = COMMENTS.lock() {
         let comments = (*comments)
           .iter()
