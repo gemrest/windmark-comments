@@ -14,7 +14,7 @@ A comment engine module for Windmark.
 # Cargo.toml
 
 [dependencies]
-windmark-comments = "0.1.0"
+windmark-comments = "0.1.1"
 ```
 
 ### Attach Windmark Comments as a module
