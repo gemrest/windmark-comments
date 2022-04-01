@@ -1,0 +1,27 @@
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+name = "windmark-comments"
+version = "0.1.0"
+authors = ["Fuwn <contact@fuwn.me>"]
+edition = "2021"
+description = "A comment engine module for Windmark"
+readme = "README.md"
+homepage = "https://github.com/gemrest/windmark-comments"
+repository = "https://github.com/gemrest/windmark-comments"
+license = "GPL-3.0-only"
+keywords = ["gemini", "windmark"]
+categories = ["web-programming"]
+
+[dependencies]
+# Windmark
+windmark = "0.1.7"
+
+# Date/ time
+chrono = "0.4.19"
+
+# URL Encoding
+urlencoding = "2.1.0"
+
+# Async
+tokio = { version = "0.2.4", features = ["full"] }

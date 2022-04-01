@@ -1,0 +1,60 @@
+# ------------
+# | Wrappers |
+# ------------
+[tasks.fmt]
+command = "cargo"
+args = ["fmt"]
+private = true
+
+[tasks.check]
+command = "cargo"
+args = ["check"]
+private = true
+
+[tasks.clippy]
+command = "cargo"
+args = ["clippy"]
+private = true
+
+# -------------
+# | Executors |
+# -------------
+[tasks.checkf]
+dependencies = ["fmt", "check"]
+
+[tasks.checkfc]
+dependencies = ["fmt", "check", "clippy"]
+
+[tasks.genkey]
+command = "openssl"
+args = [
+  "req",
+  "-new",
+  "-subj",
+  "/CN=localhost",
+  "-x509",
+  "-newkey",
+  "ec",
+  "-pkeyopt",
+  "ec_paramgen_curve:prime256v1",
+  "-days",
+  "365",
+  "-nodes",
+  "-out",
+  "windmark_comments_public.pem",
+  "-keyout",
+  "windmark_comments_private.pem",
+  "-inform",
+  "pem",
+]
+
+[tasks.run]
+dependencies = ["checkfc"]
+command = "cargo"
+args = ["run", "--example", "windmark_comments"]
+
+[tasks.docs]
+workspace = false
+toolchain = "nightly-2022-02-22"
+command = "cargo"
+args = ["doc", "--open", "--no-deps"]
