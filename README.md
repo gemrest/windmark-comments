@@ -1,5 +1,7 @@
 # Windmark Comments
 
+[![crates.io](https://img.shields.io/crates/v/windmark-comments.svg)](https://crates.io/crates/windmark-comments)
+[![docs.rs](https://docs.rs/windmark-comments/badge.svg)](https://docs.rs/windmark-comments)
 [![github.com](https://github.com/gemrest/windmark-comments/actions/workflows/check.yaml/badge.svg?branch=main)](https://github.com/gemrest/windmark-comments/actions/workflows/check.yaml)
 
 A comment engine module for Windmark.
