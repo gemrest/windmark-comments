@@ -79,13 +79,20 @@
 #![deny(clippy::all, clippy::nursery, clippy::pedantic)]
 #![recursion_limit = "128"]
 
-use std::{lazy::SyncLazy, sync::Mutex};
+use std::{
+  lazy::SyncLazy,
+  sync::{
+    atomic::{AtomicUsize, Ordering},
+    Mutex,
+  },
+};
 
 use chrono::{DateTime, Utc};
 use windmark::Response;
 
 static COMMENTS: SyncLazy<Mutex<Comments>> =
   SyncLazy::new(|| Mutex::new(vec![]));
+static MAX_COMMENTS: AtomicUsize = AtomicUsize::new(500);
 
 /// Keeps track of comments, storing date/ time and the comment.
 pub type Comments = Vec<(DateTime<Utc>, String)>;
@@ -97,6 +104,11 @@ pub type Comments = Vec<(DateTime<Utc>, String)>;
 /// May produce an error if the comments could not be loaded.
 pub fn get_comments() -> Result<Comments, Box<dyn std::error::Error>> {
   Ok((*COMMENTS.lock()?).clone())
+}
+
+/// Set the max amount of comments.
+pub fn set_max_comments(max_comments: usize) {
+  MAX_COMMENTS.store(max_comments, Ordering::SeqCst);
 }
 
 /// The Windmark Comments module.
@@ -120,11 +132,12 @@ pub fn module(router: &mut windmark::Router) {
         |query| {
           if let Ok(comment) = urlencoding::decode(query) {
             if let Ok(mut comments) = COMMENTS.lock() {
-              if comments.len() >= 500 {
+              if comments.len() >= MAX_COMMENTS.load(Ordering::SeqCst) {
                 Response::Success(format!(
                   "Your comment, \"{}\", could not be posted as the instance \
-                   comment limit (500) has been met...",
-                  comment
+                   comment limit ({}) has been met...",
+                  comment,
+                  MAX_COMMENTS.load(Ordering::SeqCst)
                 ))
               } else {
                 (*comments).push((Utc::now(), comment.to_string()));

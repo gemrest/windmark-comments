@@ -20,6 +20,8 @@ use windmark::Response;
 
 #[windmark::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+  windmark_comments::set_max_comments(10);
+
   windmark::Router::new()
     .set_private_key_file("windmark_comments_private.pem")
     .set_certificate_file("windmark_comments_public.pem")
