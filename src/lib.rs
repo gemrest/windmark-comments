@@ -32,10 +32,10 @@
 //! # Cargo.toml
 //!
 //! [dependencies]
-//! windmark-comments = "0.1.1"
+//! windmark-comments = "0.1.2"
 //! ```
 //!
-//! ### Attach Windmark Comments as a module
+//! ### Attach Windmark Comments as a module (Windmark >= 0.1.8)
 //!
 //! ```rust
 //! // src/main.rs
@@ -45,16 +45,39 @@
 //! #[windmark::main]
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!   windmark::Router::new()
-//!     .set_private_key_file("windmark_comments_private.pem")
-//!     .set_certificate_file("windmark_comments_public.pem")
-//!     .mount("/", Box::new(|_| Response::Success("Hello, World!".into())))
-//!     .set_error_handler(Box::new(|_| {
-//!       Response::PermanentFailure("This route does not exist!".into())
-//!     }))
-//!     // Attach Windmark Comments
-//!     .attach(windmark_comments::module)
-//!     .run()
-//!     .await
+//! .set_private_key_file("windmark_comments_private.pem")
+//! .set_certificate_file("windmark_comments_public.pem")
+//! .mount("/", Box::new(|_| Response::Success("Hello, World!".into())))
+//! .set_error_handler(Box::new(|_| {
+//! Response::PermanentFailure("This route does not exist!".into())
+//! }))
+//! // Attach Windmark Comments
+//! .attach_stateless(windmark_comments::module)
+//! .run()
+//! .await
+//! }
+//! ```
+//!
+//! ### Attach Windmark Comments as a module (Windmark <= 0.1.7)
+//!
+//! ```rust
+//! // src/main.rs
+//!
+//! use windmark::Response;
+//!
+//! #[windmark::main]
+//! fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!   windmark::Router::new()
+//! .set_private_key_file("windmark_comments_private.pem")
+//! .set_certificate_file("windmark_comments_public.pem")
+//! .mount("/", Box::new(|_| Response::Success("Hello, World!".into())))
+//! .set_error_handler(Box::new(|_| {
+//! Response::PermanentFailure("This route does not exist!".into())
+//! }))
+//! // Attach Windmark Comments
+//! .attach(windmark_comments::module)
+//! .run()
+//! .await
 //! }
 //! ```
 //!

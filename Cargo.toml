@@ -2,7 +2,7 @@
 
 [package]
 name = "windmark-comments"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Fuwn <contact@fuwn.me>"]
 edition = "2021"
 description = "A comment engine module for Windmark"
@@ -16,7 +16,7 @@ categories = ["web-programming"]
 
 [dependencies]
 # Windmark
-windmark = "0.1.7"
+windmark = "0.1.8"
 
 # Date/ time
 chrono = "0.4.19"
