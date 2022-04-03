@@ -32,7 +32,7 @@
 //! # Cargo.toml
 //!
 //! [dependencies]
-//! windmark-comments = "0.1.2"
+//! windmark-comments = "0.1.3"
 //! ```
 //!
 //! ### Attach Windmark Comments as a module (Windmark >= 0.1.8)
@@ -188,7 +188,7 @@ pub fn module(router: &mut windmark::Router) {
     }),
   );
 
-  router.set_footer(Box::new(|_| {
+  router.add_footer(Box::new(|_| {
     format!(
       "## COMMENTS ({}/{})\n=> /api/post-comment Make a comment!\n{}",
       if let Ok(comments) = COMMENTS.lock() {

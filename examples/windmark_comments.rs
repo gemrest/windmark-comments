@@ -25,7 +25,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   windmark::Router::new()
     .set_private_key_file("windmark_comments_private.pem")
     .set_certificate_file("windmark_comments_public.pem")
-    .attach(windmark_comments::module)
+    .attach_stateless(windmark_comments::module)
     .mount(
       "/",
       Box::new(|_| {
